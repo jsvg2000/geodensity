@@ -1,0 +1,57 @@
+name: Deploy Laravel App to EC2 Amazon Linux
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP (for local build test only)
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, xml, bcmath, curl, pgsql
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            # Cambiar al directorio del proyecto
+            cd /home/ec2-user/geodensity_backend
+
+            # Obtener cambios desde GitHub
+            git pull origin main
+
+            # Instalar dependencias
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+
+            # Migraciones de base de datos
+            php artisan migrate --force
+
+            # Cachear config y rutas
+            php artisan config:cache
+            php artisan route:cache
+
+            # Permisos
+            sudo chown -R ec2-user:nginx storage bootstrap/cache
+            sudo chmod -R 775 storage bootstrap/cache
+
+            # Recargar PHP-FPM (para reiniciar OPcache si aplica)
+            sudo systemctl reload php-fpm
+
+            # Recargar Nginx (por si algo cambió)
+            sudo systemctl reload nginx
