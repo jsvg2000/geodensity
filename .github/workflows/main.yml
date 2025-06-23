@@ -30,7 +30,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            # Cambiar al directorio del proyecto
             cd /home/ec2-user/geodensity_backend
 
             # Obtener cambios desde GitHub
@@ -47,7 +46,7 @@ jobs:
             php artisan route:cache
 
             # Permisos
-            sudo chown -R ec2-user:nginx storage bootstrap/cache
+            sudo chown -R apache :apache storage bootstrap/cache
             sudo chmod -R 775 storage bootstrap/cache
 
             # Recargar PHP-FPM (para reiniciar OPcache si aplica)
