@@ -1,3 +1,10 @@
+type Country {
+    name: String!
+    population: Int!
+    area: Float!
+    density: Float!
+}
+
 type ApiLog {
     id: ID!
     username: String
@@ -9,6 +16,9 @@ type ApiLog {
 type Query {
     getLogs(startDate: String, endDate: String): [ApiLog]
         @field(resolver: "App\\GraphQL\\Queries\\LogResolver@getLogs")
+
+    topCountries(limit: Int!, username: String): [Country]
+        @field(resolver: "App\\GraphQL\\Queries\\CountryResolver@topCountries")
 }
 
 type Mutation {
