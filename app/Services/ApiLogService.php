@@ -22,6 +22,19 @@ class ApiLogService
         return  ApiLog::query();
     }
 
+    public function updateUsername(int $id, string $newUsername): ?ApiLog
+    {
+        $apiLog = ApiLog::find($id);
+
+        if ($apiLog) {
+            $apiLog->username = $newUsername;
+            $apiLog->save();
+            return $apiLog;
+        }
+
+        return null;
+    }
+
 
 
 }

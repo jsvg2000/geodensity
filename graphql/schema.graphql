@@ -10,3 +10,8 @@ type Query {
     getLogs(startDate: String, endDate: String): [ApiLog]
         @field(resolver: "App\\GraphQL\\Queries\\LogResolver@getLogs")
 }
+
+type Mutation {
+    updateLogUsername(id: ID!, username: String!): ApiLog
+        @field(resolver: "App\\GraphQL\\Queries\\LogResolver@updateLogUsername")
+}
