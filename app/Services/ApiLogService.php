@@ -35,6 +35,19 @@ class ApiLogService
         return null;
     }
 
+    public function delete(int $id): bool
+    {
+        $apiLog = ApiLog::find($id);
+
+        if ($apiLog) {
+            $result = $apiLog->delete();
+
+            return $result !== null ? $result : false;
+        }
+
+        return false; 
+    }
+
 
 
 }
