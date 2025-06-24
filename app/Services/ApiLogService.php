@@ -1,53 +1,30 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\ApiLog;
-use Illuminate\Support\Facades\Log;
+use App\Repositories\Contracts\ApiLogRepositoryInterface;
 
 class ApiLogService
 {
+    public function __construct(protected ApiLogRepositoryInterface $apiLogRepository) {}
+
     public function store(string $username, array $countries): ApiLog
     {
-
-        return ApiLog::create([
-            'username' => $username,
-            'num_countries_returned' => count($countries),
-            'countries_details' => json_encode($countries),
-        ]);
+        return $this->apiLogRepository->store($username, $countries);
     }
 
     public function allLogs()
     {
-        return  ApiLog::query();
+        return $this->apiLogRepository->all();
     }
 
     public function updateUsername(int $id, string $newUsername): ?ApiLog
     {
-        $apiLog = ApiLog::find($id);
-
-        if ($apiLog) {
-            $apiLog->username = $newUsername;
-            $apiLog->save();
-            return $apiLog;
-        }
-
-        return null;
+        return $this->apiLogRepository->updateUsername($id, $newUsername);
     }
 
     public function delete(int $id): bool
     {
-        $apiLog = ApiLog::find($id);
-
-        if ($apiLog) {
-            $result = $apiLog->delete();
-
-            return $result !== null ? $result : false;
-        }
-
-        return false; 
+        return $this->apiLogRepository->delete($id);
     }
-
-
-
 }
