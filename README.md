@@ -14,7 +14,7 @@ Este proyecto backend fue desarrollado con Laravel y GraphQL. Expone un API que 
 ## ⚙️ Instalación
 
 1. Clona el repositorio:
-   git clone [text](https://github.com/jsvg2000/geodensity_backend.git)
+   git clone [https://github.com/jsvg2000/geodensity_backend.git](https://github.com/jsvg2000/geodensity_backend.git)
    cd geodensity_backend
 
 2. Instala dependencias:
@@ -34,7 +34,7 @@ Este proyecto backend fue desarrollado con Laravel y GraphQL. Expone un API que 
 
 ## 🎯 Uso del proyecto
 
-1. Accede al endpoint GraphQL desde: [text](http://localhost:8000/graphql)
+1. Accede al endpoint GraphQL desde: [http://localhost:8000/graphql](http://localhost:8000/graphql)
 2. 📡 Endpoints GraphQL disponibles
    2.1. Consulta de países
    query {
