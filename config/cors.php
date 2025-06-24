@@ -1,6 +1,6 @@
 <?php
 return [
-    'paths' => ['api/*', 'graphql-playground', 'sanctum/csrf-cookie'],
+    'paths' => ['graphql', 'graphql-playground', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'],
     'allowed_origins_patterns' => [],
